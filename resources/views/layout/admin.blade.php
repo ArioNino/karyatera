@@ -8,6 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace();
+    </script>
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -58,7 +63,7 @@
 
             <a href="#"
                 class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-pink-50 hover:text-pink-600 transition">
-                <i data-feather="file-text" class="w-5 h-5"></i> Artikel
+                <i data-feather="file-text" class="w-5 h-5"></i> Portofolio
             </a>
 
             <a href="#"

@@ -3,12 +3,12 @@
 @section('title', 'Dashboard Admin - KaryaTera')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
+{{-- <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold">Dashboard Admin</h2>
     <a href="#" class="btn btn-dark"><i class="fas fa-plus"></i> Tambah Layanan</a>
-</div>
+</div> --}}
 
-<div class="card shadow-sm">
+{{-- <div class="card shadow-sm">
     <div class="card-body">
         <h5 class="fw-semibold mb-3">Daftar Layanan</h5>
         <table class="table table-bordered align-middle">
@@ -55,5 +55,5 @@
             </tbody>
         </table>
     </div>
-</div>
+</div> --}}
 @endsection

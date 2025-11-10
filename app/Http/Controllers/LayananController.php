@@ -40,7 +40,7 @@ class LayananController extends Controller
 
     public function edit(Layanan $layanan)
     {
-        return view('admin.editLayanan', compact('layanans'));
+        return view('atmin.editLayanan', compact('layanan'));
     }
 
     public function update(Request $request, Layanan $layanan)
@@ -62,7 +62,7 @@ class LayananController extends Controller
 
         $layanan->update($data);
 
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil diperbarui.');
+        return redirect()->route('admin.layanan')->with('success', 'Layanan berhasil diperbarui.');
     }
 
     public function destroy(Layanan $layanan)
@@ -73,6 +73,6 @@ class LayananController extends Controller
 
         $layanan->delete();
 
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil dihapus.');
+        return redirect()->route('admin.layanan')->with('success', 'Layanan berhasil dihapus.');
     }
 }
