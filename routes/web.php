@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LayananController;
 
-Route::get('/', function () {
-    return view('beranda');
-})->name('beranda');
+// Route::get('/', function () {
+//     return view('beranda');
+// })->name('beranda');
 
 // Routing Auth (Login)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -17,6 +17,8 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [AuthController::class, 'dashboard'])
     ->middleware('auth')
     ->name('dashboard');
+
+Route::get('/', [LayananController::class, 'beranda'])->name('beranda');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/layanan', [LayananController::class, 'index'])->name('admin.layanan');

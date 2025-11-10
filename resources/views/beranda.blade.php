@@ -107,41 +107,25 @@
             <h2 class="text-3xl font-semibold mb-12 neon-text" data-aos="fade-up">Our Services</h2>
 
             <div class="grid md:grid-cols-3 gap-8">
-                {{-- Advertising --}}
-                <div class="glass-box p-8 hover:scale-105 transition-transform duration-300" data-aos="zoom-in">
-                    <img src="{{ asset('images/advertising.jpg') }}" alt="Advertising"
-                        class="w-full h-40 object-cover rounded-md mb-4">
-                    <h3 class="text-xl font-bold mb-3 text-fuchsia-400">Advertising</h3>
-                    <p class="text-gray-300 text-sm">
-                        Konsep kreatif dan produksi iklan profesional — mulai dari TVC, digital ads, hingga brand
-                        campaign.
-                    </p>
-                </div>
-
-                {{-- Documentation --}}
-                <div class="glass-box p-8 hover:scale-105 transition-transform duration-300" data-aos="zoom-in"
-                    data-aos-delay="100">
-                    <img src="{{ asset('images/documentation.jpg') }}" alt="Documentation"
-                        class="w-full h-40 object-cover rounded-md mb-4">
-                    <h3 class="text-xl font-bold mb-3 text-fuchsia-400">Documentation</h3>
-                    <p class="text-gray-300 text-sm">
-                        Dokumentasi acara, perjalanan, dan kegiatan — kami menangkap cerita di balik setiap momen.
-                    </p>
-                </div>
-
-                {{-- Company Profile --}}
-                <div class="glass-box p-8 hover:scale-105 transition-transform duration-300" data-aos="zoom-in"
-                    data-aos-delay="200">
-                    <img src="{{ asset('images/company-profile.jpg') }}" alt="Company Profile"
-                        class="w-full h-40 object-cover rounded-md mb-4">
-                    <h3 class="text-xl font-bold mb-3 text-fuchsia-400">Company Profile</h3>
-                    <p class="text-gray-300 text-sm">
-                        Profil perusahaan dengan storytelling visual yang menampilkan nilai dan identitas brand.
-                    </p>
-                </div>
+                @forelse ($layanans as $layanan)
+                    <div class="glass-box p-8 hover:scale-105 transition-transform duration-300" data-aos="zoom-in">
+                        @if ($layanan->gambar)
+                            <img src="{{ asset('storage/' . $layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
+                                class="w-full h-40 object-cover rounded-md mb-4">
+                        @else
+                            <img src="{{ asset('images/default-service.jpg') }}" alt="No Image"
+                                class="w-full h-40 object-cover rounded-md mb-4">
+                        @endif
+                        <h3 class="text-xl font-bold mb-3 text-fuchsia-400">{{ $layanan->nama_layanan }}</h3>
+                        <p class="text-gray-300 text-sm">{{ $layanan->deskripsi }}</p>
+                    </div>
+                @empty
+                    <p class="text-gray-300 col-span-3 text-center">Belum ada layanan yang ditambahkan.</p>
+                @endforelse
             </div>
         </div>
     </section>
+
 
     {{-- FEATURES SECTION --}}
     <section id="features" class="py-24 bg-gradient-to-b from-[#0a0018] to-black text-center">

@@ -13,6 +13,11 @@ class LayananController extends Controller
         $layanans = Layanan::all();
         return view('atmin.layanan', compact('layanans'));
     }
+    public function beranda()
+    {
+        $layanans = Layanan::all();
+        return view('beranda', compact('layanans'));
+    }
 
     public function create()
     {
