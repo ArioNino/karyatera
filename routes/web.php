@@ -17,6 +17,7 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])
     ->name('dashboard');
 
 Route::get('/', [LayananController::class, 'beranda'])->name('beranda');
+Route::get('/portofolio', [PortoController::class, 'portofolio'])->name('portofolio');
 
 Route::middleware(['auth'])->group(function () {
 

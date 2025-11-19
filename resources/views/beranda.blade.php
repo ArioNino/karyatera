@@ -47,8 +47,8 @@
             <div class="space-x-6 text-sm hidden md:block">
                 <a href="#about" class="hover:text-fuchsia-400 transition">About</a>
                 <a href="#services" class="hover:text-fuchsia-400 transition">Services</a>
+                <a href="portofolio" class="hover:text-fuchsia-400 transition">Portofolio</a>
                 <a href="#contact" class="hover:text-fuchsia-400 transition">Contact</a>
-                <a href="login" class="hover:text-fuchsia-400 transition">Login</a>
             </div>
         </div>
     </nav>

@@ -19,6 +19,12 @@ class PortoController extends Controller
         return view('atmin.porto.tambah');
     }
 
+    public function portofolio()
+    {
+        $portofolios = Portofolio::all();
+        return view('portofolio', compact('portofolios'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
