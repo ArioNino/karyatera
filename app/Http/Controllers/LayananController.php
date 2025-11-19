@@ -11,7 +11,7 @@ class LayananController extends Controller
     public function index()
     {
         $layanans = Layanan::all();
-        return view('atmin.layanan', compact('layanans'));
+        return view('atmin.layanan.index', compact('layanans'));
     }
     public function beranda()
     {
@@ -21,7 +21,7 @@ class LayananController extends Controller
 
     public function create()
     {
-        return view('atmin.tambahLayanan');
+        return view('atmin.layanan.tambah');
     }
 
     public function store(Request $request)
@@ -45,7 +45,7 @@ class LayananController extends Controller
 
     public function edit(Layanan $layanan)
     {
-        return view('atmin.editLayanan', compact('layanan'));
+        return view('atmin.layanan.edit', compact('layanan'));
     }
 
     public function update(Request $request, Layanan $layanan)

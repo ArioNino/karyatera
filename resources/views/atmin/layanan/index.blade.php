@@ -36,7 +36,7 @@
                     {{ $layanan->deskripsi }}
                 </p>
 
-                <div class="mt-4 flex gap-4">
+                <div class="mt-4 flex    gap-4">
                     <a href="{{ route('admin.layanan.edit', $layanan) }}"
                        class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-yellow-400 text-white hover:bg-yellow-500 transition">
                         <i data-feather="edit-3" class="w-4 h-4"></i> Edit

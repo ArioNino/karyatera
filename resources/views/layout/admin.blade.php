@@ -61,14 +61,12 @@
                 <i data-feather="layers" class="w-5 h-5"></i> Layanan
             </a>
 
-            <a href="#"
-                class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-pink-50 hover:text-pink-600 transition">
-                <i data-feather="file-text" class="w-5 h-5"></i> Portofolio
-            </a>
-
-            <a href="#"
-                class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-pink-50 hover:text-pink-600 transition">
-                <i data-feather="users" class="w-5 h-5"></i> Pengguna
+            <a href="{{ route('admin.porto') }}"
+                class="flex items-center gap-3 py-2 px-4 rounded-lg transition
+              {{ request()->routeIs('admin.porto*')
+                  ? 'bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700 font-semibold'
+                  : 'hover:bg-pink-50 hover:text-pink-600' }}">
+                <i data-feather="layers" class="w-5 h-5"></i> Portofolio
             </a>
         </nav>
 
