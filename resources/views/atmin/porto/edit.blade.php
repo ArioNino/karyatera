@@ -9,7 +9,7 @@
 <div class="bg-white p-6 rounded-2xl shadow-md">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Edit Portofolio</h2>
 
-    <form action="{{ route('admin.porto.update', $porto->id) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+    <form action="{{ route('admin.porto.update', $portofolio) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
         @method('PUT')
 
@@ -17,7 +17,7 @@
         <div>
             <label class="block text-gray-600 font-medium mb-2">Nama Portofolio</label>
             <input type="text" name="nama_portofolio"
-                value="{{ old('nama_portofolio', $porto->nama_portofolio) }}"
+                value="{{ old('nama_portofolio', $portofolio->nama_portofolio) }}"
                 class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
             @error('nama_portofolio')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -30,11 +30,11 @@
             <select name="kategori"
                 class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
                 <option value="">-- Pilih Kategori --</option>
-                <option value="Fotografi" {{ old('kategori', $porto->kategori) == 'Fotografi' ? 'selected' : '' }}>Fotografi</option>
-                <option value="Videografi" {{ old('kategori', $porto->kategori) == 'Videografi' ? 'selected' : '' }}>Videografi</option>
-                <option value="Desain Grafis" {{ old('kategori', $porto->kategori) == 'Desain Grafis' ? 'selected' : '' }}>Desain Grafis</option>
-                <option value="Branding" {{ old('kategori', $porto->kategori) == 'Branding' ? 'selected' : '' }}>Branding</option>
-                <option value="Lainnya" {{ old('kategori', $porto->kategori) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                <option value="Fotografi" {{ old('kategori', $portofolio->kategori) == 'Fotografi' ? 'selected' : '' }}>Fotografi</option>
+                <option value="Videografi" {{ old('kategori', $portofolio->kategori) == 'Videografi' ? 'selected' : '' }}>Videografi</option>
+                <option value="Desain Grafis" {{ old('kategori', $portofolio->kategori) == 'Desain Grafis' ? 'selected' : '' }}>Desain Grafis</option>
+                <option value="Branding" {{ old('kategori', $portofolio->kategori) == 'Branding' ? 'selected' : '' }}>Branding</option>
+                <option value="Lainnya" {{ old('kategori', $portofolio->kategori) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
             </select>
             @error('kategori')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -45,7 +45,7 @@
         <div>
             <label class="block text-gray-600 font-medium mb-2">Link</label>
             <input type="url" name="link"
-                value="{{ old('link', $porto->link) }}"
+                value="{{ old('link', $portofolio->link) }}"
                 placeholder="https://contoh.com"
                 class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
             @error('link')
@@ -61,10 +61,10 @@
                 {{-- Preview --}}
                 <div class="border rounded-xl p-2 w-48 h-48 flex items-center justify-center overflow-hidden bg-gray-50">
                     <img id="preview"
-                         src="{{ $porto->gambar ? asset('storage/porto/' . $porto->gambar) : '' }}"
-                         class="object-cover w-full h-full {{ $porto->gambar ? '' : 'hidden' }}">
+                         src="{{ $portofolio->gambar ? asset('storage/porto/' . $portofolio->gambar) : '' }}"
+                         class="object-cover w-full h-full {{ $portofolio->gambar ? '' : 'hidden' }}">
 
-                    @if(!$porto->gambar)
+                    @if(!$portofolio->gambar)
                         <p id="noPreview" class="text-gray-400 text-sm">Preview</p>
                     @else
                         <p id="noPreview" class="hidden"></p>
