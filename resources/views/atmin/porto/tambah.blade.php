@@ -42,9 +42,12 @@
         {{-- Link (URL Input) --}}
         <div>
             <label class="block text-gray-600 font-medium mb-2">Link</label>
-            <input type="url" name="link" value="{{ old('link') }}"
-                placeholder="https://contoh.com"
-                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
+            <input type="url" 
+                    name="link" 
+                    value="{{ old('link') }}"
+                    placeholder="https://youtube.com/watch?v=xxxx"
+                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
+                    oninput="validateYoutube(this)">
             @error('link')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
@@ -113,6 +116,19 @@ Swal.fire({
     timer: 2000
 });
 </script>
+
+<script>
+function validateYoutube(input) {
+    const pattern = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/).+/;
+
+    if (input.value && !pattern.test(input.value)) {
+        input.setCustomValidity("Hanya link YouTube yang diperbolehkan");
+    } else {
+        input.setCustomValidity("");
+    }
+}
+</script>
+
 @endif
 
 @endsection
