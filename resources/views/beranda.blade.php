@@ -178,7 +178,7 @@
                 </a>
                 <p class="text-gray-300 leading-relaxed">
                     Karyatera is a production house based in Bogor, 
-                    specializing in <span class="text-fuchsia-400 font-semibold">profiles, commercialsv</span>, and <span class="text-fuchsia-400 font-semibold">documentaries </span> </br>
+                    specializing in <span class="text-fuchsia-400 font-semibold">profiles, commercial</span>, and <span class="text-fuchsia-400 font-semibold">documentaries </span> </br>
                     We provide comprehensive services covering pre-production, production,and post-production, supported by a skilled team to bring your vision to life.
                 </p>
             </div>
@@ -322,25 +322,26 @@
                 Our Workflow
             </h2>
 
-            <div class="grid md:grid-cols-2 items-center">
+            <div class="grid md:grid-cols-2">
 
-                {{-- LEFT: SLIDER --}}
-                <div class="relative glass-box" data-aos="fade-right">
+                {{-- LEFT: IMAGE SLIDER --}}
+                <div class="relative p-0 m-0 overflow-hidden select-none" data-aos="fade-right">
 
-                    <!-- IMAGE WRAPPER -->
-                    <div class="w-full md:h-[400px] overflow-hidden relative">
-                        <img id="workflowSlide"
-                            src="{{ asset('images/porto/porto1.png') }}"
-                            class="w-full object-cover  transition-all duration-700">
+                    <div id="sliderTrack"
+                        class="flex transition-transform duration-700 ease-in-out w-full h-[400px]">
+                        <img src="{{ asset('images/porto/porto1.png') }}" class="w-full h-full object-cover flex-shrink-0">
+                        <img src="{{ asset('images/porto/porto2.png') }}" class="w-full h-full object-cover flex-shrink-0">
+                        <img src="{{ asset('images/porto/porto3.png') }}" class="w-full h-full object-cover flex-shrink-0">
                     </div>
 
-                    <!-- DOTS -->
-                    <div id="workflowDots" class="flex justify-center space-x-3 mt-4"></div>
+                    {{-- DOTS --}}
+                    <div id="sliderDots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-3"></div>
+
                 </div>
 
                 {{-- RIGHT: VIDEO --}}
-                <div class="glass-box" data-aos="fade-left">
-                    <video controls class="w-full h-80 md:h-[400px] shadow-lg object-cover">
+                 <div class="p-0 m-0" data-aos="fade-left">
+                    <video autoplay muted loop playsinline disablepictureinpicture class="w-full h-[300px] md:h-[400px] object-cover block">
                         <source src="{{ asset('images/workflow/behind.mp4') }}" type="video/mp4">
                     </video>
                 </div>
@@ -471,6 +472,89 @@
             mirror: true
         });
     </script>
+
+    <script>
+        const track = document.getElementById("sliderTrack");
+        const dotsContainer = document.getElementById("sliderDots");
+        const slides = track.children;
+
+        let index = 0;
+        let startX = 0;
+        let isDragging = false;
+        let interval;
+
+        // === CREATE DOTS ===
+        for (let i = 0; i < slides.length; i++) {
+            const dot = document.createElement("div");
+            dot.className = "w-3 h-3 rounded-full bg-white/40 cursor-pointer";
+            dot.addEventListener("click", () => {
+                index = i;
+                updateSlider();
+                resetAutoSlide();
+            });
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateDots() {
+            [...dotsContainer.children].forEach((dot, i) => {
+                dot.className = i === index
+                    ? "w-3 h-3 rounded-full bg-white cursor-pointer"
+                    : "w-3 h-3 rounded-full bg-white/40 cursor-pointer";
+            });
+        }
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+        }
+
+        function autoSlide() {
+            interval = setInterval(() => {
+                index = (index + 1) % slides.length;
+                updateSlider();
+            }, 3000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(interval);
+            autoSlide();
+        }
+
+        // === SWIPE SUPPORT (DRAG) ===
+        track.addEventListener("mousedown", (e) => {
+            startX = e.clientX;
+            isDragging = true;
+        });
+
+        track.addEventListener("mouseup", (e) => {
+            if (!isDragging) return;
+            let endX = e.clientX;
+            handleSwipe(endX - startX);
+            isDragging = false;
+        });
+
+        track.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        track.addEventListener("touchend", (e) => {
+            let endX = e.changedTouches[0].clientX;
+            handleSwipe(endX - startX);
+        });
+
+        function handleSwipe(distance) {
+            if (distance > 50) index = Math.max(index - 1, 0);
+            if (distance < -50) index = Math.min(index + 1, slides.length - 1);
+            updateSlider();
+            resetAutoSlide();
+        }
+
+        // INIT
+        updateSlider();
+        autoSlide();
+    </script>
+
+
     
 
 </body>
