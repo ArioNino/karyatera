@@ -66,9 +66,35 @@
                 <div class="glass-box p-4 rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg"
                     data-aos="zoom-in">
 
-                    {{-- IMAGE --}}
-                    <img src="{{ asset('storage/' . $item->gambar) }}"
-                        class="w-full h-64 object-cover rounded-xl mb-4">
+                    {{-- THUMBNAIL YOUTUBE --}}
+                    @if ($item->youtube_id)
+                    <div onclick="openVideo('{{ $item->youtube_id }}')" 
+                        class="relative cursor-pointer group aspect-video rounded-xl overflow-hidden">
+
+                        <img src="https://img.youtube.com/vi/{{ $item->youtube_id }}/hqdefault.jpg"
+                            class="w-full h-full object-cover">
+
+                        {{-- Play button --}}
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="bg-white/60 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center">
+                                <svg class="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        {{-- Hover overlay --}}
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                    </div>
+                @else
+                    <div class="aspect-video rounded-xl overflow-hidden">
+                        <img src="{{ asset('storage/' . $item->gambar) }}"
+                            class="w-full h-full object-cover">
+                    </div>
+                @endif
+
+
+
 
                     {{-- TITLE --}}
                     <h3 class="text-xl font-bold text-fuchsia-400 mb-2">
@@ -77,7 +103,7 @@
 
                     {{-- CATEGORY --}}
                     @if ($item->kategori)
-                        <p class="text-sm text-gray-400 mb-3">
+                        <p class="text-sm text-purple-400 mb-3 text-center">
                             {{ $item->kategori }}
                         </p>
                     @endif
@@ -97,6 +123,26 @@
         </div>
     </section>
 
+    {{-- FULLSCREEN VIDEO POPUP --}}
+    <div id="videoModal" 
+        class="fixed inset-0 bg-black/80 z-[9999] hidden justify-center items-center">
+        
+        <div class="relative w-11/12 md:w-4/5 lg:w-3/5">
+            <iframe id="videoFrame" 
+                    class="w-full h-[60vh] md:h-[70vh] rounded-xl"
+                    src="" 
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+
+            {{-- CLOSE BUTTON --}}
+            <button onclick="closeVideo()" 
+                    class="absolute -top-12 right-0 text-white text-4xl">
+                &times;
+            </button>
+        </div>
+    </div>
+
     {{-- FOOTER --}}
     <footer class="py-6 text-center text-gray-500 text-sm border-t border-white/10">
         © 2025 KaryaTera — All Rights Reserved.
@@ -108,6 +154,28 @@
             once: false,
             mirror: true
         });
+    </script>
+
+    <script>
+    function openVideo(videoId) {
+        const modal = document.getElementById('videoModal');
+        const frame = document.getElementById('videoFrame');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&showinfo=0&modestbranding=1`;
+    }
+
+    function closeVideo() {
+        const modal = document.getElementById('videoModal');
+        const frame = document.getElementById('videoFrame');
+
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+
+        frame.src = ""; // STOP video
+    }
     </script>
 
 </body>

@@ -28,11 +28,11 @@
             <select name="kategori"
                 class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
                 <option value="">-- Pilih Kategori --</option>
-                <option value="Fotografi" {{ old('kategori') == 'Fotografi' ? 'selected' : '' }}>Fotografi</option>
-                <option value="Videografi" {{ old('kategori') == 'Videografi' ? 'selected' : '' }}>Videografi</option>
-                <option value="Desain Grafis" {{ old('kategori') == 'Desain Grafis' ? 'selected' : '' }}>Desain Grafis</option>
-                <option value="Branding" {{ old('kategori') == 'Branding' ? 'selected' : '' }}>Branding</option>
-                <option value="Lainnya" {{ old('kategori') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                <option value="Company Profile" {{ old('kategori') == 'Company_Profile' ? 'selected' : '' }}>Company Profile</option>
+                <option value="Advertising" {{ old('kategori') == 'Advertising' ? 'selected' : '' }}>Advertising</option>
+                <option value="Documentary" {{ old('kategori') == 'Documentary' ? 'selected' : '' }}>Documentary</option>
+                <!-- <option value="Branding" {{ old('kategori') == 'Branding' ? 'selected' : '' }}>Branding</option>
+                <option value="Lainnya" {{ old('kategori') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option> -->
             </select>
             @error('kategori')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
