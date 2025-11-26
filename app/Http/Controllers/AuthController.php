@@ -11,9 +11,9 @@ class AuthController extends Controller
     {
         return view('login');
     }
-    public function dashboard()
+    public function layanan()
     {
-        return view('atmin.dashboard');
+        return view('admin.layanan');
     }
 
     public function login(Request $request)
@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->route('dashboard');
+            return redirect()->route('admin.layanan');
         } else {
             return redirect()->back()
                 ->with('error', 'Email atau password salah.')
