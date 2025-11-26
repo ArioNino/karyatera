@@ -33,6 +33,64 @@
         .btn-gradient:hover {
             background: linear-gradient(90deg, #ec4899, #7e22ce);
         }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+
+        .stacking-wrapper {
+            height: 350vh;
+            padding-top: 120px;
+            background: linear-gradient(to bottom, #000, #0a0018, #000);
+        }
+
+        .stacking-card {
+            position: sticky;
+            top: 120px;
+            height: 320px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            margin-bottom: 120px;
+            padding: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stack-img {
+        object-fit: cover;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        transition: all 0.6s ease;
+        }
+
+        /* 1/4 layar */
+        .stack-img.small {
+            height: 25vh;
+            width: auto;
+        }
+
+        /* 1/2 layar */
+        .stack-img.medium {
+            height: 50vh;
+            width: auto;
+        }
+
+        /* Full Screen */
+        .stack-img.large {
+            height: 90vh;
+            width: auto;
+        }
+
+        /* Agar card center */
+        .stacking-card {
+            justify-content: center;
+        }
+
+
     </style>
 </head>
 
@@ -41,8 +99,10 @@
     {{-- NAVBAR --}}
     <nav class="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-md border-b border-white/10 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
-            <a href="#home">
-                <h1 class="text-xl font-semibold neon-text">KaryaTera</h1>
+            <a href="#home" class="flex items-center">
+                <img src="{{ asset('images/logo/karayatera.png') }}"
+                alt="Karyatera Logo"
+                class="h-5 md:h-6 w-auto object-contain">
             </a>
             <div class="space-x-6 text-sm hidden md:block">
                 <a href="#about" class="hover:text-fuchsia-400 transition">About</a>
@@ -80,23 +140,51 @@
         </div>
     </section>
 
+    {{-- LOGO INFINITE SLIDER --}}
+    <section class="py-16 bg-[#050011]">
+    <h3 class="text-center text-gray-300 mb-8 text-sm">
+        The most innovative companies work with us
+    </h3>
+
+    <div class="overflow-hidden relative w-full">
+        <div class="flex items-center gap-16 animate-marquee whitespace-nowrap w-max">
+
+            {{-- Set pertama --}}
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+
+            {{-- Duplikasi --}}
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+            <img src="{{ asset('images/logo/grab-food-seeklogo.png') }}" class="h-10 opacity-80 hover:opacity-100 transition">
+
+        </div>
+    </div>
+</section>
+
     {{-- ABOUT SECTION --}}
     <section id="about" class="py-24 bg-gradient-to-b from-transparent to-[#0a0018] text-center">
         <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-            <div data-aos="fade-right">
-                <img src="{{ asset('images/about-team.jpg') }}" alt="KaryaTera Team"
-                    class="rounded-2xl shadow-lg w-full object-cover">
+            <div data-aos="fade-right" class="text-left flex flex-col space-y-6">
+                <a>
+                    <img src="{{ asset('images/logo/karayatera.png') }}" class="w-80 md:w-88">
+                </a>
+                <p class="text-gray-300 leading-relaxed">
+                    Karyatera is a production house based in Bogor, 
+                    specializing in <span class="text-fuchsia-400 font-semibold">profiles, commercialsv</span>, and <span class="text-fuchsia-400 font-semibold">documentaries </span> </br>
+                    We provide comprehensive services covering pre-production, production,and post-production, supported by a skilled team to bring your vision to life.
+                </p>
             </div>
             <div data-aos="fade-left">
-                <h2 class="text-3xl font-semibold mb-6 neon-text">About Us</h2>
-                <p class="text-gray-300 leading-relaxed">
-                    Di KaryaTera, kami percaya bahwa setiap ide memiliki jiwa — dan tugas kami adalah menghidupkannya.
-                    Kami membantu brand dan individu mengekspresikan kisah mereka melalui visual yang kuat, emosional,
-                    dan autentik.
-                    Dengan tim profesional di bidang <span class="text-fuchsia-400 font-semibold">videografi, fotografi,
-                        dan desain</span>,
-                    kami menghadirkan karya yang beresonansi secara visual dan emosional.
-                </p>
+                <img src="{{ asset('images/porto/porto1.png') }}" alt="About Us"
+                 class="rounded-2xl shadow-lg w-full object-cover">
             </div>
         </div>
     </section>
@@ -127,6 +215,77 @@
     </section>
 
 
+    {{-- PORTOFOLIO PREVIEW SECTION --}}
+    <section class="py-24 bg-gradient-to-b from-black to-[#0a0018] text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-semibold mb-12 neon-text" data-aos="fade-up">
+                Our Latest Works
+            </h2>
+
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
+
+                @forelse ($portofolios as $item)
+                    <div class="glass-box p-4 rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg"
+                        data-aos="zoom-in">
+
+                        {{-- THUMBNAIL --}}
+                        @if ($item->youtube_id)
+                            <div onclick="openVideo('{{ $item->youtube_id }}')"
+                                class="relative cursor-pointer group aspect-video rounded-xl overflow-hidden">
+
+                                <img src="https://img.youtube.com/vi/{{ $item->youtube_id }}/hqdefault.jpg"
+                                    class="w-full h-full object-cover">
+
+                                <div class="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition">
+                                    <div class="bg-white/70 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center shadow-xl">
+                                        <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="aspect-video rounded-xl overflow-hidden">
+                                <img src="{{ asset('storage/' . $item->gambar) }}"
+                                    class="w-full h-full object-cover">
+                            </div>
+                        @endif
+
+                        {{-- TITLE --}}
+                        <h3 class="text-lg font-bold text-fuchsia-400 mt-3">
+                            {{ $item->judul }}
+                        </h3>
+
+                        {{-- CATEGORY --}}
+                        <p class="text-sm text-purple-400 mb-2 text-center">
+                            {{ $item->kategori }}
+                        </p>
+
+                        {{-- DESCRIPTION --}}
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            {{ \Illuminate\Support\Str::limit($item->deskripsi, 80) }}
+                        </p>
+                    </div>
+                @empty
+                    <p class="text-gray-400 col-span-3 text-center">
+                        Belum ada portofolio yang ditambahkan.
+                    </p>
+                @endforelse
+
+            </div>
+
+            {{-- BUTTON KE PAGE PORTOFOLIO --}}
+            <div class="mt-14">
+                <a href="{{ route('portofolio') }}"
+                    class="btn-gradient inline-block text-white font-semibold py-3 px-10 rounded-full transition-all duration-300 shadow-lg hover:shadow-fuchsia-500/30">
+                    View All Portofolio
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
     {{-- FEATURES SECTION --}}
     <section id="features" class="py-24 bg-gradient-to-b from-[#0a0018] to-black text-center">
         <div class="max-w-6xl mx-auto px-6">
@@ -152,6 +311,40 @@
                         Kualitas visual berstandar tinggi dengan pendekatan storytelling dan teknologi modern.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- WORKFLOW SECTION --}}
+    <section id="workflow" class="py-24 bg-gradient-to-b from-black to-[#0a0018]">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-semibold mb-12 text-center neon-text" data-aos="fade-up">
+                Our Workflow
+            </h2>
+
+            <div class="grid md:grid-cols-2 items-center">
+
+                {{-- LEFT: SLIDER --}}
+                <div class="relative glass-box" data-aos="fade-right">
+
+                    <!-- IMAGE WRAPPER -->
+                    <div class="w-full md:h-[400px] overflow-hidden relative">
+                        <img id="workflowSlide"
+                            src="{{ asset('images/porto/porto1.png') }}"
+                            class="w-full object-cover  transition-all duration-700">
+                    </div>
+
+                    <!-- DOTS -->
+                    <div id="workflowDots" class="flex justify-center space-x-3 mt-4"></div>
+                </div>
+
+                {{-- RIGHT: VIDEO --}}
+                <div class="glass-box" data-aos="fade-left">
+                    <video controls class="w-full h-80 md:h-[400px] shadow-lg object-cover">
+                        <source src="{{ asset('images/workflow/behind.mp4') }}" type="video/mp4">
+                    </video>
+                </div>
+
             </div>
         </div>
     </section>
@@ -243,6 +436,29 @@
         </form>
     </section>
 
+    {{-- STACKING CARD STICKY SECTION --}}
+    <section id="stacking" class="stacking-wrapper text-white">
+
+        <div class="max-w-6xl mx-auto px-6">
+
+            {{-- CARD 1 --}}
+            <div class="stacking-card" data-aos="fade-up">
+                <img src="{{ asset('images/porto/porto1.png') }}" class="stack-img small">
+            </div>
+
+            {{-- CARD 2 --}}
+            <div class="stacking-card" data-aos="fade-up">
+                <img src="{{ asset('images/porto/porto2.png') }}" class="stack-img medium">
+            </div>
+
+            {{-- CARD 3 --}}
+            <div class="stacking-card" data-aos="fade-up">
+                <img src="{{ asset('images/porto/porto3.png') }}" class="stack-img large">
+            </div>
+        </div>
+    </section>
+
+
     {{-- FOOTER --}}
     <footer class="py-6 text-center text-gray-500 text-sm border-t border-white/10">
         © 2025 KaryaTera — All Rights Reserved.
@@ -255,6 +471,7 @@
             mirror: true
         });
     </script>
+    
 
 </body>
 

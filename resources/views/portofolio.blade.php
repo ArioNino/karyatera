@@ -41,10 +41,11 @@
     {{-- NAVBAR --}}
     <nav class="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-md border-b border-white/10 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
-            <a href="/">
-                <h1 class="text-xl font-semibold neon-text">KaryaTera</h1>
+            <a href="#home" class="flex items-center">
+                <img src="{{ asset('images/logo/karayatera.png') }}"
+                alt="Karyatera Logo"
+                class="h-5 md:h-6 w-auto object-contain">
             </a>
-
             <div class="space-x-6 text-sm hidden md:block">
                 <a href="/#about" class="hover:text-fuchsia-400 transition">About</a>
                 <a href="/#services" class="hover:text-fuchsia-400 transition">Services</a>

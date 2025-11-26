@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layanan;
+use App\Models\Portofolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,9 +16,11 @@ class LayananController extends Controller
     }
     public function beranda()
     {
-        $layanans = Layanan::all();
-        return view('beranda', compact('layanans'));
+    $layanans = Layanan::all();
+    $portofolios = Portofolio::latest()->limit(6)->get();
+    return view('beranda', compact('layanans', 'portofolios'));
     }
+
 
     public function create()
     {
