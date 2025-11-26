@@ -27,11 +27,17 @@ class PortoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_portofolio' => 'required|string|max:255',
             'kategori' => 'required|string|max:255',
-            'link' => 'required|url',
+            'link' => [
+                'required',
+                'regex:#^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[A-Za-z0-9_\-]+(\?.*)?$#'
+            ],
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'link.regex' => 'Link YouTube tidak valid. Gunakan link resmi YouTube.',
+            'link.required' => 'Link wajib diisi.',
         ]);
 
         $gambarPath = $request->file('gambar') ? $request->file('gambar')->store('portofolio', 'public') : null;
