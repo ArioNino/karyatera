@@ -38,20 +38,20 @@
 <body class="flex min-h-screen">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-white shadow-lg flex flex-col">
+    <aside class="w-64 bg-white shadow-lg flex-col">
         <div class="p-6 border-b border-gray-200">
             <img src="{{ asset('images/karyatera.png') }}" alt="logo-karyatera">
             <p class="text-sm text-gray-500 mx-2">Creative Admin</p>
         </div>
 
         <nav class="flex-1 p-5 space-y-3 text-gray-700">
-            <a href="{{ route('dashboard') }}"
+            <!-- <a href="{{ route('dashboard') }}"
                 class="flex items-center gap-3 py-2 px-4 rounded-lg transition
               {{ request()->routeIs('dashboard')
                   ? 'bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700 font-semibold'
                   : 'hover:bg-pink-50 hover:text-pink-600' }}">
                 <i data-feather="home" class="w-5 h-5"></i> Dashboard
-            </a>
+            </a> -->
 
             <a href="{{ route('admin.layanan') }}"
                 class="flex items-center gap-3 py-2 px-4 rounded-lg transition
