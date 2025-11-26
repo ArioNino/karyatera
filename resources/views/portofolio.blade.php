@@ -27,6 +27,12 @@
             backdrop-filter: blur(12px);
             border-radius: 1rem;
         }
+
+        .filter-active {
+            background-color: #d946ef !important;
+            color: white !important;
+            border-color: #f0abfc !important;
+        }
     </style>
 </head>
 
@@ -49,64 +55,75 @@
     </nav>
 
     {{-- HEADER --}}
-    <section class="pt-40 pb-20 text-center">
+    <section class="pt-40 pb-10 text-center">
         <h1 class="text-4xl md:text-5xl font-bold neon-text" data-aos="fade-up">
             Our Portofolio
         </h1>
-        <p class="text-gray-400 max-w-2xl mx-auto mt-4" data-aos="fade-up" data-aos-delay="150">
-            Jelajahi karya terbaik kami dalam fotografi, videografi, dan desain kreatif.
-        </p>
     </section>
+
+    {{-- FILTER BUTTONS --}}
+    <div class="max-w-4xl mx-auto px-6 mb-12 flex flex-wrap justify-center gap-4">
+
+        <button onclick="filterCategory('all', this)"
+            class="filter-btn px-5 py-2 rounded-lg border border-fuchsia-500 text-fuchsia-300 hover:bg-fuchsia-600/20 transition filter-active">
+            All
+        </button>
+
+        @foreach ($categories as $cat)
+            <button onclick="filterCategory('{{ $cat }}', this)"
+                class="filter-btn px-5 py-2 rounded-lg border border-fuchsia-500 text-fuchsia-300 hover:bg-fuchsia-600/20 transition">
+                {{ $cat }}
+            </button>
+        @endforeach
+
+    </div>
 
     {{-- PORTFOLIO GRID --}}
     <section class="pb-32">
         <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-3 gap-10">
 
             @forelse ($portofolios as $item)
-                <div class="glass-box p-4 rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg"
-                    data-aos="zoom-in">
+                <div class="glass-box p-4 rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg portfolio-card"
+                    data-aos="zoom-in"
+                    data-category="{{ $item->kategori }}">
 
-                    {{-- THUMBNAIL YOUTUBE --}}
+                    {{-- THUMBNAIL --}}
                     @if ($item->youtube_id)
-                    <div onclick="openVideo('{{ $item->youtube_id }}')" 
-                        class="relative cursor-pointer group aspect-video rounded-xl overflow-hidden">
+                        <div onclick="openVideo('{{ $item->youtube_id }}')"
+                            class="relative cursor-pointer group aspect-video rounded-xl overflow-hidden">
 
-                        <img src="https://img.youtube.com/vi/{{ $item->youtube_id }}/hqdefault.jpg"
-                            class="w-full h-full object-cover">
+                            <img src="https://img.youtube.com/vi/{{ $item->youtube_id }}/hqdefault.jpg"
+                                class="w-full h-full object-cover">
 
-                        {{-- Play button --}}
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="bg-white/60 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center">
-                                <svg class="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
+                            {{-- PLAY BUTTON --}}
+                            <div class="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition">
+                                <div class="bg-white/70 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center shadow-xl">
+                                    <svg class="w-10 h-10 text-black" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                </div>
                             </div>
+
+                            {{-- Hover overlay --}}
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                         </div>
-
-                        {{-- Hover overlay --}}
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                    </div>
-                @else
-                    <div class="aspect-video rounded-xl overflow-hidden">
-                        <img src="{{ asset('storage/' . $item->gambar) }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                @endif
-
-
+                    @else
+                        <div class="aspect-video rounded-xl overflow-hidden">
+                            <img src="{{ asset('storage/' . $item->gambar) }}"
+                                class="w-full h-full object-cover">
+                        </div>
+                    @endif
 
 
                     {{-- TITLE --}}
-                    <h3 class="text-xl font-bold text-fuchsia-400 mb-2">
+                    <h3 class="text-xl font-bold text-fuchsia-400 mt-3">
                         {{ $item->judul }}
                     </h3>
 
                     {{-- CATEGORY --}}
-                    @if ($item->kategori)
-                        <p class="text-sm text-purple-400 mb-3 text-center">
-                            {{ $item->kategori }}
-                        </p>
-                    @endif
+                    <p class="text-sm text-purple-400 mb-3 text-center">
+                        {{ $item->kategori }}
+                    </p>
 
                     {{-- DESCRIPTION --}}
                     <p class="text-gray-300 text-sm leading-relaxed">
@@ -124,20 +141,18 @@
     </section>
 
     {{-- FULLSCREEN VIDEO POPUP --}}
-    <div id="videoModal" 
+    <div id="videoModal"
         class="fixed inset-0 bg-black/80 z-[9999] hidden justify-center items-center">
-        
         <div class="relative w-11/12 md:w-4/5 lg:w-3/5">
-            <iframe id="videoFrame" 
-                    class="w-full h-[60vh] md:h-[70vh] rounded-xl"
-                    src="" 
-                    frameborder="0"
-                    allow="autoplay; encrypted-media"
-                    allowfullscreen></iframe>
+            <iframe id="videoFrame"
+                class="w-full h-[60vh] md:h-[70vh] rounded-xl"
+                src=""
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen></iframe>
 
-            {{-- CLOSE BUTTON --}}
-            <button onclick="closeVideo()" 
-                    class="absolute -top-12 right-0 text-white text-4xl">
+            <button onclick="closeVideo()"
+                class="absolute -top-12 right-0 text-white text-4xl">
                 &times;
             </button>
         </div>
@@ -149,33 +164,56 @@
     </footer>
 
     <script>
+        // AOS
         AOS.init({
             duration: 1000,
             once: false,
             mirror: true
         });
-    </script>
 
-    <script>
-    function openVideo(videoId) {
-        const modal = document.getElementById('videoModal');
-        const frame = document.getElementById('videoFrame');
+        // FILTER FUNCTION
+        function filterCategory(category, button) {
+            const cards = document.querySelectorAll('.portfolio-card');
+            const buttons = document.querySelectorAll('.filter-btn');
 
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+            // Remove active state
+            buttons.forEach(btn => btn.classList.remove('filter-active'));
 
-        frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&showinfo=0&modestbranding=1`;
-    }
+            // Add active state to selected
+            button.classList.add('filter-active');
 
-    function closeVideo() {
-        const modal = document.getElementById('videoModal');
-        const frame = document.getElementById('videoFrame');
+            // Show / hide cards
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
 
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+                if (category === 'all' || cat === category) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
 
-        frame.src = ""; // STOP video
-    }
+        // VIDEO POPUP
+        function openVideo(videoId) {
+            const modal = document.getElementById('videoModal');
+            const frame = document.getElementById('videoFrame');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&showinfo=0&modestbranding=1`;
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const frame = document.getElementById('videoFrame');
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            frame.src = "";
+        }
     </script>
 
 </body>
