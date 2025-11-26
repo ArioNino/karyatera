@@ -22,8 +22,15 @@ class PortoController extends Controller
     public function portofolio()
     {
         $portofolios = Portofolio::all();
-        return view('portofolio', compact('portofolios'));
+
+        // Ambil kategori unik dari database
+        $categories = Portofolio::select('kategori')
+                                ->distinct()
+                                ->pluck('kategori');
+
+        return view('portofolio', compact('portofolios', 'categories'));
     }
+
 
     public function store(Request $request)
     {
