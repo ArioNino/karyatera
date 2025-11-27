@@ -42,55 +42,6 @@
             animation: marquee 20s linear infinite;
         }
 
-        .stacking-wrapper {
-            height: 350vh;
-            padding-top: 120px;
-            background: linear-gradient(to bottom, #000, #0a0018, #000);
-        }
-
-        .stacking-card {
-            position: sticky;
-            top: 120px;
-            height: 320px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            margin-bottom: 120px;
-            padding: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .stack-img {
-        object-fit: cover;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        transition: all 0.6s ease;
-        }
-
-        /* 1/4 layar */
-        .stack-img.small {
-            height: 25vh;
-            width: auto;
-        }
-
-        /* 1/2 layar */
-        .stack-img.medium {
-            height: 50vh;
-            width: auto;
-        }
-
-        /* Full Screen */
-        .stack-img.large {
-            height: 90vh;
-            width: auto;
-        }
-
-        /* Agar card center */
-        .stacking-card {
-            justify-content: center;
-        }
-
-
     </style>
 </head>
 
@@ -350,35 +301,6 @@
         </div>
     </section>
 
-    {{-- OUR CLIENTS SECTION --}}
-    <section id="clients" class="bg-[#001AFF] py-20 text-center text-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-10">
-                WE’VE ALSO WORKED ON VARIOUS CREATIVE PROJECTS.
-            </h2>
-
-            {{-- Logo Grid --}}
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                <img src="{{ asset('images/clients/bni.png') }}" alt="BNI"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/bsimaslahat.png') }}" alt="BSI Maslahat"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/narasi.png') }}" alt="Narasi"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/ipb.png') }}" alt="IPB"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/iptprestasi.png') }}" alt="IPT Prestasi"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/baznas.png') }}" alt="Baznas"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/indosat.png') }}" alt="Indosat"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-                <img src="{{ asset('images/clients/ditmawa.png') }}" alt="Ditmawa"
-                    class="h-10 md:h-12 object-contain brightness-0 invert">
-            </div>
-        </div>
-    </section>
-
     {{-- CONTACT US SECTION --}}
     <section id="contact" class="py-24 bg-gradient-to-b from-black via-[#0a0018] to-black text-center">
         <h2 class="text-3xl font-semibold mb-12 neon-text" data-aos="fade-up">Ready to Work With Us?</h2>
@@ -435,28 +357,6 @@
                 class="w-full p-3 rounded-md bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:ring-2 focus:ring-fuchsia-500"></textarea>
             <button type="submit" class="btn-gradient text-white py-3 px-6 rounded-md w-full">Send Message</button>
         </form>
-    </section>
-
-    {{-- STACKING CARD STICKY SECTION --}}
-    <section id="stacking" class="stacking-wrapper text-white">
-
-        <div class="max-w-6xl mx-auto px-6">
-
-            {{-- CARD 1 --}}
-            <div class="stacking-card" data-aos="fade-up">
-                <img src="{{ asset('images/porto/porto1.png') }}" class="stack-img small">
-            </div>
-
-            {{-- CARD 2 --}}
-            <div class="stacking-card" data-aos="fade-up">
-                <img src="{{ asset('images/porto/porto2.png') }}" class="stack-img medium">
-            </div>
-
-            {{-- CARD 3 --}}
-            <div class="stacking-card" data-aos="fade-up">
-                <img src="{{ asset('images/porto/porto3.png') }}" class="stack-img large">
-            </div>
-        </div>
     </section>
 
 
