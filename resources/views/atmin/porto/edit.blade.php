@@ -61,7 +61,7 @@
                 {{-- Preview --}}
                 <div class="border rounded-xl p-2 w-48 h-48 flex items-center justify-center overflow-hidden bg-gray-50">
                     <img id="preview"
-                         src="{{ $portofolio->gambar ? asset('storage/porto/' . $portofolio->gambar) : '' }}"
+                         src="{{ $portofolio->gambar ? asset('storage/' . $portofolio->gambar) : '' }}"
                          class="object-cover w-full h-full {{ $portofolio->gambar ? '' : 'hidden' }}">
 
                     @if(!$portofolio->gambar)
