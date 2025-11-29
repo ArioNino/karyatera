@@ -9,7 +9,7 @@ class Portofolio extends Model
 {
     use HasFactory;
 
-    protected $table = 'lortofolio';
+    protected $table = 'portofolio';
     protected $primaryKey = 'porto_id';
     protected $fillable = [
         'nama_portofolio',
