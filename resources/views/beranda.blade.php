@@ -234,6 +234,24 @@
             </div>
 
         </div>
+
+        {{-- FULLSCREEN VIDEO POPUP --}}
+        <div id="videoModal"
+            class="fixed inset-0 bg-black/80 z-[9999] hidden justify-center items-center">
+            <div class="relative w-11/12 md:w-4/5 lg:w-3/5">
+                <iframe id="videoFrame"
+                    class="w-full h-[60vh] md:h-[70vh] rounded-xl"
+                    src=""
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+
+                <button onclick="closeVideo()"
+                    class="absolute -top-12 right-0 text-white text-4xl">
+                    &times;
+                </button>
+            </div>
+        </div>
     </section>
 
 
@@ -452,6 +470,27 @@
         // INIT
         updateSlider();
         autoSlide();
+
+        function openVideo(videoId) {
+            const modal = document.getElementById('videoModal');
+            const frame = document.getElementById('videoFrame');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&showinfo=0&modestbranding=1`;
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const frame = document.getElementById('videoFrame');
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            frame.src = "";
+        }
+
     </script>
 
 
