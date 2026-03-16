@@ -24,17 +24,18 @@
             @enderror
         </div>
 
-        {{-- Kategori Dropdown --}}
+        {{-- Kategori Dropdown (dari layanan yang ada) --}}
         <div>
             <label class="block text-gray-600 font-medium mb-2">Kategori</label>
             <select name="kategori"
                 class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
                 <option value="">-- Pilih Kategori --</option>
-                <option value="Company Profile" {{ old('kategori', $portofolio->kategori) == 'Company Profile' ? 'selected' : '' }}>Company Profile</option>
-                <option value="Advertising" {{ old('kategori', $portofolio->kategori) == 'Advertising' ? 'selected' : '' }}>Advertising</option>
-                <option value="Documentary" {{ old('kategori', $portofolio->kategori) == 'Documentary' ? 'selected' : '' }}>Documentary</option>
-                {{-- <option value="Branding" {{ old('kategori', $portofolio->kategori) == 'Branding' ? 'selected' : '' }}>Branding</option>
-                <option value="Lainnya" {{ old('kategori', $portofolio->kategori) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option> --}}
+                @foreach ($layanans as $layanan)
+                    <option value="{{ $layanan->nama_layanan }}"
+                        {{ old('kategori', $portofolio->kategori) == $layanan->nama_layanan ? 'selected' : '' }}>
+                        {{ $layanan->nama_layanan }}
+                    </option>
+                @endforeach
             </select>
             @error('kategori')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -43,11 +44,12 @@
 
         {{-- Link --}}
         <div>
-            <label class="block text-gray-600 font-medium mb-2">Link</label>
+            <label class="block text-gray-600 font-medium mb-2">Link YouTube</label>
             <input type="url" name="link"
                 value="{{ old('link', $portofolio->link) }}"
-                placeholder="https://contoh.com"
-                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">
+                placeholder="https://youtube.com/watch?v=xxxx"
+                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
+                oninput="validateYoutube(this)">
             @error('link')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
@@ -57,21 +59,16 @@
         <div>
             <label class="block text-gray-600 font-medium mb-2">Gambar Portofolio</label>
             <div class="flex gap-6 items-start">
-
-                {{-- Preview --}}
                 <div class="border rounded-xl p-2 w-48 h-48 flex items-center justify-center overflow-hidden bg-gray-50">
                     <img id="preview"
                          src="{{ $portofolio->gambar ? asset('storage/' . $portofolio->gambar) : '' }}"
                          class="object-cover w-full h-full {{ $portofolio->gambar ? '' : 'hidden' }}">
-
                     @if(!$portofolio->gambar)
                         <p id="noPreview" class="text-gray-400 text-sm">Preview</p>
                     @else
                         <p id="noPreview" class="hidden"></p>
                     @endif
                 </div>
-
-                {{-- Upload --}}
                 <label for="gambar" class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100 transition">
                     <svg class="w-10 h-10 mb-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -79,7 +76,6 @@
                     <p class="text-sm text-gray-500">Klik atau Drop gambar baru</p>
                     <input id="gambar" type="file" name="gambar" accept="image/*" class="hidden" onchange="previewImage(event)">
                 </label>
-
             </div>
             @error('gambar')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -92,7 +88,6 @@
                 class="px-4 py-2 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300 transition mr-2">
                 Batal
             </a>
-
             <button type="submit"
                 class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:opacity-90 transition">
                 Update
@@ -106,14 +101,19 @@
 function previewImage(event) {
     let img = document.getElementById('preview');
     let noPreview = document.getElementById('noPreview');
-
     img.src = URL.createObjectURL(event.target.files[0]);
     img.classList.remove('hidden');
     noPreview.classList.add('hidden');
+    img.onload = function() { URL.revokeObjectURL(img.src); };
+}
 
-    img.onload = function() {
-        URL.revokeObjectURL(img.src);
-    };
+function validateYoutube(input) {
+    const pattern = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/).+/;
+    if (input.value && !pattern.test(input.value)) {
+        input.setCustomValidity("Hanya link YouTube yang diperbolehkan");
+    } else {
+        input.setCustomValidity("");
+    }
 }
 </script>
 

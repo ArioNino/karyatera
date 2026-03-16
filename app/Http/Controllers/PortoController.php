@@ -16,7 +16,8 @@ class PortoController extends Controller
 
     public function create()
     {
-        return view('atmin.porto.tambah');
+        $layanans = \App\Models\Layanan::all();
+        return view('atmin.porto.tambah', compact('layanans'));
     }
 
     public function portofolio()
@@ -61,7 +62,8 @@ class PortoController extends Controller
 
     public function edit(Portofolio $portofolio)
     {
-        return view('atmin.porto.edit', compact('portofolio'));
+        $layanans = \App\Models\Layanan::all();
+        return view('atmin.porto.edit', compact('portofolio', 'layanans'));
     }
 
     public function update(Request $request, Portofolio $portofolio)

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PortoController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\PesanController;
+use App\Http\Controllers\MitraController;
 
 
 // Routing Auth (Login)
@@ -36,4 +38,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/portofolio/{portofolio}/edit', [PortoController::class, 'edit'])->name('admin.porto.edit');
     Route::put('/admin/portofolio/{portofolio}', [PortoController::class, 'update'])->name('admin.porto.update');
     Route::delete('/admin/portofolio/{portofolio}', [PortoController::class, 'destroy'])->name('admin.porto.destroy');
+    
+    # ADMIN PESAN
+    Route::get('/admin/pesan', [PesanController::class, 'index'])->name('admin.pesan');
+    Route::patch('/admin/pesan/{pesan}/read', [PesanController::class, 'markRead'])->name('admin.pesan.read');
+    Route::delete('/admin/pesan/{pesan}', [PesanController::class, 'destroy'])->name('admin.pesan.destroy');
+    Route::post('/pesan', [PesanController::class, 'store'])->name('pesan.store');
+
+    # ADMIN MITRA
+    Route::get('/admin/mitra', [MitraController::class, 'index'])->name('admin.mitra');
+    Route::get('/admin/mitra/create', [MitraController::class, 'create'])->name('admin.mitra.create');
+    Route::post('/admin/mitra', [MitraController::class, 'store'])->name('admin.mitra.store');
+    Route::get('/admin/mitra/{mitra}/edit', [MitraController::class, 'edit'])->name('admin.mitra.edit');
+    Route::put('/admin/mitra/{mitra}', [MitraController::class, 'update'])->name('admin.mitra.update');
+    Route::delete('/admin/mitra/{mitra}', [MitraController::class, 'destroy'])->name('admin.mitra.destroy');
 });

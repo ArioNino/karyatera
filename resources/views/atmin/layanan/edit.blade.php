@@ -27,8 +27,17 @@
         {{-- Deskripsi --}}
         <div>
             <label class="block text-gray-600 font-medium mb-2">Deskripsi</label>
-            <textarea name="deskripsi" rows="4"
-                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">{{ old('deskripsi', $layanan->deskripsi) }}</textarea>
+            <textarea name="deskripsi" id="deskripsi" rows="4" maxlength="150"
+                placeholder="Masukkan deskripsi layanan"
+                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
+                oninput="updateCounter()">{{ old('deskripsi', $layanan->deskripsi) }}</textarea>
+            <div class="flex justify-between text-xs mt-1">
+                <span id="charWarning" class="text-red-500 hidden">Maksimal 150 karakter</span>
+                <span class="ml-auto text-gray-400"><span id="charCount">0</span>/150</span>
+            </div>
+            @error('deskripsi')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         {{-- Gambar --}}
@@ -66,16 +75,24 @@
 </div>
 
 <script>
+function updateCounter() {
+    const textarea = document.getElementById('deskripsi');
+    const count = textarea.value.length;
+    document.getElementById('charCount').textContent = count;
+    document.getElementById('charWarning').classList.toggle('hidden', count < 150);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateCounter();
+});
+
 function previewImage(event) {
     let img = document.getElementById('preview');
     let noPreview = document.getElementById('noPreview');
-
     img.src = URL.createObjectURL(event.target.files[0]);
     img.classList.remove('hidden');
     noPreview.classList.add('hidden');
-    img.onload = function() {
-        URL.revokeObjectURL(img.src);
-    }
+    img.onload = function() { URL.revokeObjectURL(img.src); }
 }
 </script>
 
