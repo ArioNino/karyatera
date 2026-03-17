@@ -16,9 +16,10 @@ class LayananController extends Controller
     }
     public function beranda()
     {
-    $layanans = Layanan::all();
-    $portofolios = Portofolio::latest()->limit(6)->get();
-    return view('beranda', compact('layanans', 'portofolios'));
+        $layanans    = Layanan::all();
+        $portofolios = Portofolio::latest()->limit(6)->get();
+        $mitras      = \App\Models\Mitra::orderBy('urutan')->get();
+        return view('beranda', compact('layanans', 'portofolios', 'mitras'));
     }
 
 
@@ -31,7 +32,7 @@ class LayananController extends Controller
     {
         $request->validate([
             'nama_layanan' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'deskripsi' => 'nullable|string|max:150',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

@@ -13,6 +13,7 @@
     <form action="{{ route('admin.layanan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
 
+        {{-- Nama Layanan --}}
         <div>
             <label class="block text-gray-600 font-medium mb-2">Nama Layanan</label>
             <input type="text" name="nama_layanan" value="{{ old('nama_layanan') }}" placeholder="Masukkan nama layanan"
@@ -22,18 +23,26 @@
             @enderror
         </div>
 
+        {{-- Deskripsi --}}
         <div>
             <label class="block text-gray-600 font-medium mb-2">Deskripsi</label>
-            <textarea name="deskripsi" rows="4" placeholder="Masukkan deskripsi layanan"
-                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none">{{ old('deskripsi') }}</textarea>
+            <textarea name="deskripsi" id="deskripsi" rows="4" maxlength="150"
+                placeholder="Masukkan deskripsi layanan"
+                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
+                oninput="updateCounter()">{{ old('deskripsi') }}</textarea>
+            <div class="flex justify-between text-xs mt-1">
+                <span id="charWarning" class="text-red-500 hidden">Maksimal 150 karakter</span>
+                <span class="ml-auto text-gray-400"><span id="charCount">0</span>/150</span>
+            </div>
+            @error('deskripsi')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         {{-- UPLOAD GAMBAR --}}
         <div>
             <label class="block text-gray-600 font-medium mb-2">Gambar</label>
-
             <div class="flex gap-6 items-start">
-                <!-- Dropzone -->
                 <div class="border rounded-xl p-2 w-40 h-40 flex items-center justify-center overflow-hidden bg-gray-50">
                     <img id="preview" src="" class="object-cover w-full h-full hidden">
                     <p id="noPreview" class="text-gray-400 text-sm">Preview</p>
@@ -41,22 +50,18 @@
                 <label for="gambar"
                     class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100 transition">
                     <svg class="w-10 h-10 mb-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4v16m8-8H4"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                     <p class="text-sm text-gray-500">Klik atau Drop gambar disini</p>
                     <input id="gambar" type="file" name="gambar" accept="image/*" class="hidden" onchange="previewImage(event)">
                 </label>
-
-                <!-- Preview -->
             </div>
-
         </div>
 
+        {{-- Tombol --}}
         <div class="flex justify-end">
             <a href="{{ route('admin.layanan') }}"
                 class="px-4 py-2 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300 transition mr-2">Batal</a>
-
             <button type="submit"
                 class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:opacity-90 transition">
                 Simpan
@@ -67,16 +72,24 @@
 </div>
 
 <script>
+function updateCounter() {
+    const textarea = document.getElementById('deskripsi');
+    const count = textarea.value.length;
+    document.getElementById('charCount').textContent = count;
+    document.getElementById('charWarning').classList.toggle('hidden', count < 150);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateCounter();
+});
+
 function previewImage(event) {
     let img = document.getElementById('preview');
     let noPreview = document.getElementById('noPreview');
-
     img.src = URL.createObjectURL(event.target.files[0]);
     img.classList.remove('hidden');
     noPreview.classList.add('hidden');
-    img.onload = function() {
-        URL.revokeObjectURL(img.src);
-    }
+    img.onload = function() { URL.revokeObjectURL(img.src); }
 }
 </script>
 

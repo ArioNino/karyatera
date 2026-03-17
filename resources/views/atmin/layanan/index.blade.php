@@ -4,10 +4,9 @@
 
 @section('content')
 
-<!-- Include SweetAlert2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<div class="flex justify-between items-center mb-10">
+<div class="flex justify-between items-center mb-6">
     <div>
         <h2 class="text-3xl font-bold gradient-text flex items-center gap-2">
             <i data-feather="briefcase"></i> Manajemen Layanan
@@ -20,51 +19,98 @@
     </a>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-    @forelse ($layanans as $layanan)
-        <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-            <img src="{{ asset('storage/' . $layanan->gambar) }}"
-                 class="w-full h-48 object-cover"
-                 alt="{{ $layanan->nama_layanan }}">
-
-            <div class="p-5">
-                <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                    <i data-feather="layers" class="text-pink-500"></i> {{ $layanan->nama_layanan }}
-                </h3>
-
-                <p class="text-sm text-gray-600 mt-2 line-clamp-3">
-                    {{ $layanan->deskripsi }}
-                </p>
-
-                <div class="mt-4 flex    gap-4">
-                    <a href="{{ route('admin.layanan.edit', $layanan) }}"
-                       class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-yellow-400 text-white hover:bg-yellow-500 transition">
-                        <i data-feather="edit-3" class="w-4 h-4"></i> Edit
-                    </a>
-
-                    <form action="{{ route('admin.layanan.destroy', $layanan) }}" method="POST" class="delete-form">
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="button"
-                                class="btn-delete flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-red-500 text-white hover:bg-red-600 transition">
-                            <i data-feather="trash-2" class="w-4 h-4"></i> Hapus
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @empty
-        <p class="text-gray-500 col-span-3 text-center">Belum ada layanan.</p>
-    @endforelse
+{{-- Search --}}
+<div class="mb-4">
+    <input type="text" id="searchInput" placeholder="Cari layanan..."
+        class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none text-sm">
 </div>
 
-<!-- Konfirmasi Hapus -->
+{{-- Tabel --}}
+<div class="bg-white rounded-2xl shadow-md overflow-hidden">
+    <table class="w-full text-sm text-left" id="layananTable">
+        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+            <tr>
+                <th class="px-4 py-3">#</th>
+                <th class="px-4 py-3">Gambar</th>
+                <th class="px-4 py-3">Nama Layanan</th>
+                <th class="px-4 py-3">Deskripsi</th>
+                <th class="px-4 py-3 text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="layananBody">
+            @forelse ($layanans as $index => $layanan)
+                <tr class="border-t hover:bg-gray-50 transition layanan-row">
+                    <td class="px-4 py-3 text-gray-500">{{ $index + 1 }}</td>
+                    <td class="px-4 py-3">
+                        @if ($layanan->gambar)
+                            <img src="{{ asset('storage/' . $layanan->gambar) }}"
+                                class="w-16 h-16 object-cover rounded-lg"
+                                alt="{{ $layanan->nama_layanan }}">
+                        @else
+                            <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-xs">
+                                No Image
+                            </div>
+                        @endif
+                    </td>
+                    <td class="px-4 py-3 font-medium text-gray-800 layanan-nama">
+                        {{ $layanan->nama_layanan }}
+                    </td>
+                    <td class="px-4 py-3 text-gray-600 max-w-xs">
+                        <span class="line-clamp-2">{{ $layanan->deskripsi }}</span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <div class="flex justify-center gap-2">
+                            <a href="{{ route('admin.layanan.edit', $layanan) }}"
+                               class="flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg bg-yellow-400 text-white hover:bg-yellow-500 transition">
+                                <i data-feather="edit-3" class="w-3 h-3"></i> Edit
+                            </a>
+                            <form action="{{ route('admin.layanan.destroy', $layanan) }}" method="POST" class="delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button"
+                                        class="btn-delete flex items-center gap-1 px-3 py-1.5 text-xs rounded-lg bg-red-500 text-white hover:bg-red-600 transition">
+                                    <i data-feather="trash-2" class="w-3 h-3"></i> Hapus
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="px-4 py-6 text-center text-gray-400">Belum ada layanan.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
+{{-- Empty search state --}}
+<p id="emptySearch" class="text-center text-gray-400 mt-4 hidden">Tidak ada layanan yang cocok.</p>
+
 <script>
+// Search
+document.getElementById('searchInput').addEventListener('input', function () {
+    const keyword = this.value.toLowerCase();
+    const rows = document.querySelectorAll('.layanan-row');
+    let found = 0;
+
+    rows.forEach(row => {
+        const nama = row.querySelector('.layanan-nama').textContent.toLowerCase();
+        if (nama.includes(keyword)) {
+            row.classList.remove('hidden');
+            found++;
+        } else {
+            row.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('emptySearch').classList.toggle('hidden', found > 0);
+});
+
+// Hapus
 document.querySelectorAll('.btn-delete').forEach(button => {
     button.addEventListener('click', function () {
         let form = this.closest('form');
-
         Swal.fire({
             title: "Hapus layanan?",
             text: "Data ini akan terhapus permanen.",
@@ -75,15 +121,12 @@ document.querySelectorAll('.btn-delete').forEach(button => {
             confirmButtonText: "Ya, Hapus",
             cancelButtonText: "Batal",
         }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
+            if (result.isConfirmed) form.submit();
         });
     });
 });
 </script>
 
-<!-- Notifikasi Sukses -->
 @if(session('success'))
 <script>
 Swal.fire({
